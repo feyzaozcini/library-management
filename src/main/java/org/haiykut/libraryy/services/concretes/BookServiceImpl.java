@@ -18,7 +18,7 @@ public class BookServiceImpl implements BookService {
     private final CategoryRepository categoryRepository;
     private final MemberBookRepository memberBookRepository;
     @Override
-    public ResponseEntity<BookAddDto> add(BookAddDto dto) {
+    public BookAddDto add(BookAddDto dto) {
         Book newBook = new Book();
         newBook.setName(dto.getName());
         newBook.setAuthor(dto.getAuthor());
@@ -26,17 +26,17 @@ public class BookServiceImpl implements BookService {
         newBook.setCategory(categoryRepository.findById(dto.getCategoryId()).orElseThrow(()-> new RuntimeException("Cant find a category of the related id!")));
         newBook.setBookCount(dto.getBookCount());
         bookRepository.save(newBook);
-        return ResponseEntity.ok(new BookAddDto(newBook.getName(), newBook.getAuthor(), newBook.getCategory().getId(),newBook.getPage(), newBook.getBookCount()));
+        return new BookAddDto(newBook.getName(), newBook.getAuthor(), newBook.getCategory().getId(),newBook.getPage(), newBook.getBookCount());
     }
 
     @Override
-    public ResponseEntity<String> deleteById(int id) {
+    public String deleteById(int id) {
         bookRepository.deleteById(id);
-        return ResponseEntity.ok("Silindi!");
+        return "Silindi!";
     }
 
     @Override
-    public ResponseEntity<BookUpdateDto> updateById(int id, BookUpdateDto dto) {
+    public BookUpdateDto updateById(int id, BookUpdateDto dto) {
         Book requestedBook = bookRepository.findById(id).orElseThrow(()-> new RuntimeException("Cant find a book of the related id!"));
         requestedBook.setName(dto.getName());
         requestedBook.setBookCount(dto.getBookCount());
@@ -44,17 +44,17 @@ public class BookServiceImpl implements BookService {
         requestedBook.setAuthor(dto.getAuthor());
         requestedBook.setCategory(categoryRepository.findById(dto.getCategoryId()).orElseThrow());
         bookRepository.save(requestedBook);
-        return ResponseEntity.ok(new BookUpdateDto(requestedBook.getName(), requestedBook.getAuthor(), requestedBook.getCategory().getId(), requestedBook.getPage(), requestedBook.getBookCount()));
+        return new BookUpdateDto(requestedBook.getName(), requestedBook.getAuthor(), requestedBook.getCategory().getId(), requestedBook.getPage(), requestedBook.getBookCount());
 
     }
 
     @Override
-    public ResponseEntity<List<Book>> getAllBooks() {
-        return ResponseEntity.ok(bookRepository.findAll());
+    public List<Book> getAllBooks() {
+        return bookRepository.findAll();
     }
 
     @Override
-    public ResponseEntity<Book> getBookById(int id) {
-        return ResponseEntity.ok(bookRepository.findById(id).orElseThrow(()-> new RuntimeException("Cant find a book of the related id!")));
+    public Book getBookById(int id) {
+        return bookRepository.findById(id).orElseThrow(()-> new RuntimeException("Cant find a book of the related id!"));
     }
 }

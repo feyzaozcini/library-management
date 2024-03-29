@@ -8,12 +8,12 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface BookService {
-    ResponseEntity<BookAddDto> add(BookAddDto dto);
+    BookAddDto add(BookAddDto dto);
 
-    ResponseEntity<String> deleteById(int id);
-    ResponseEntity<BookUpdateDto> updateById(int id, BookUpdateDto dto);
+    String deleteById(int id);
+    BookUpdateDto updateById(int id, BookUpdateDto dto);
 
-    ResponseEntity<List<Book>> getAllBooks();
-    ResponseEntity<Book> getBookById(int id);
+    List<Book> getAllBooks();
+    Book getBookById(int id);
 
 }

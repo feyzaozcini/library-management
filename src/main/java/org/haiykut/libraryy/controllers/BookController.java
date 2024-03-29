@@ -16,23 +16,23 @@ import java.util.List;
 public class BookController {
     private final BookService bookService;
     @PostMapping("/add")
-    public ResponseEntity<BookAddDto> add(@RequestBody BookAddDto dto){
+    public BookAddDto add(@RequestBody BookAddDto dto){
         return bookService.add(dto);
     }
     @GetMapping("/all")
-    public ResponseEntity<List<Book>> getAllBooks(){
+    public List<Book> getAllBooks(){
         return bookService.getAllBooks();
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Book> getBookById(@RequestParam int id){
+    public Book getBookById(@PathVariable int id){
         return bookService.getBookById(id);
     }
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteById(@RequestParam int id){
+    public String deleteById(@PathVariable int id){
         return bookService.deleteById(id);
     }
     @PutMapping("/update/{id}")
-    public ResponseEntity<BookUpdateDto> updateById(@RequestParam int id, @RequestBody BookUpdateDto dto){
+    public BookUpdateDto updateById(@PathVariable int id, @RequestBody BookUpdateDto dto){
         return bookService.updateById(id, dto);
     }
 }
