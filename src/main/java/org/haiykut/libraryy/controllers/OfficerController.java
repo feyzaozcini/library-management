@@ -3,8 +3,10 @@ package org.haiykut.libraryy.controllers;
 import lombok.RequiredArgsConstructor;
 import org.haiykut.libraryy.entities.Officer;
 import org.haiykut.libraryy.services.abstracts.OfficerService;
-import org.haiykut.libraryy.services.dtos.OfficerForAddDto;
 import org.haiykut.libraryy.services.dtos.RentRequestDto;
+import org.haiykut.libraryy.services.dtos.requests.officer.OfficerAddRequestDto;
+import org.haiykut.libraryy.services.dtos.requests.officer.OfficerUpdateRequestDto;
+import org.haiykut.libraryy.services.dtos.responses.Officer.OfficerAddResponseDto;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -18,28 +20,28 @@ public class OfficerController {
 
     @GetMapping("/all")
     public List<Officer> getAll(){
-        return officerService.getAll();
+        return officerService.getAllOfficers();
     }
     @GetMapping("/{officerId}")
     public Officer getOneOfficer(@PathVariable int officerId) {
-        return officerService.getById(officerId);
+        return officerService.getOfficerById(officerId);
     }
     @PostMapping("/add")
-    public void add(@RequestBody OfficerForAddDto dto)
-    {
-        officerService.add(dto);
+    public OfficerAddResponseDto add(@RequestBody OfficerAddRequestDto dto){
+        return officerService.add(dto);
+
     }
 
     @DeleteMapping ("/{officerId}")
     public void deleteOneOfficer(@PathVariable int officerId) {
-        officerService.delete(officerId);
+        officerService.deleteById(officerId);
     }
 
     @PutMapping("/update/{id}")
-    public void updateOfficer(@PathVariable int id, @RequestBody OfficerForAddDto newOfficer)
+    public void updateOfficer(@PathVariable int id, @RequestBody OfficerUpdateRequestDto newOfficer)
     {
         try {
-            officerService.update(id,newOfficer);
+            officerService.updateById(id,newOfficer);
         } catch (Exception e) {
             throw new RuntimeException("Error updating officer: " + e.getMessage());
         }

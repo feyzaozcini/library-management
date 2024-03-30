@@ -5,7 +5,7 @@ import org.haiykut.libraryy.repositories.CategoryRepository;
 import org.haiykut.libraryy.services.abstracts.CategoryService;
 import org.haiykut.libraryy.services.dtos.requests.category.CategoryAddRequestDto;
 import org.haiykut.libraryy.services.dtos.requests.category.CategoryUpdateRequestDto;
-import org.haiykut.libraryy.services.dtos.responses.CategoryAddResponseDto;
+import org.haiykut.libraryy.services.dtos.responses.Category.CategoryAddResponseDto;
 import org.springframework.stereotype.Service;
 import java.util.List;
 @Service

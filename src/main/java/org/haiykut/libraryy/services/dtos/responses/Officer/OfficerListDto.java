@@ -1,7 +1,5 @@
-package org.haiykut.libraryy.services.dtos;
+package org.haiykut.libraryy.services.dtos.responses.Officer;
 
-
-import jakarta.persistence.JoinColumn;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,10 +7,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-
-public class OfficerForAddDto {
+@NoArgsConstructor
+public class OfficerListDto {
+    private int id;
     private String name;
     private String password;
     private String phoneNumber;

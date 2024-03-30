@@ -1,16 +1,15 @@
-package org.haiykut.libraryy.services.dtos;
-
+package org.haiykut.libraryy.services.dtos.requests.officer;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class MemberForAddDto {
+public class OfficerUpdateRequestDto {
     private String name;
     private String password;
     private String phoneNumber;

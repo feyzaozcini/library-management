@@ -5,8 +5,10 @@ import org.haiykut.libraryy.entities.*;
 import org.haiykut.libraryy.repositories.*;
 import org.haiykut.libraryy.services.abstracts.BookService;
 import org.haiykut.libraryy.services.abstracts.OfficerService;
-import org.haiykut.libraryy.services.dtos.OfficerForAddDto;
 import org.haiykut.libraryy.services.dtos.RentRequestDto;
+import org.haiykut.libraryy.services.dtos.requests.officer.OfficerAddRequestDto;
+import org.haiykut.libraryy.services.dtos.requests.officer.OfficerUpdateRequestDto;
+import org.haiykut.libraryy.services.dtos.responses.Officer.OfficerAddResponseDto;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -24,46 +26,44 @@ public class OfficerServiceImpl implements OfficerService  {
     private final BookService bookService;
 
     @Override
-    public void add(OfficerForAddDto dto) {
+    public OfficerAddResponseDto add(OfficerAddRequestDto dto) {
         Officer officer=new Officer();
         officer.setName(dto.getName());
         officer.setPassword(dto.getPassword());
         officer.setEmail(dto.getEmail());
         officer.setPhoneNumber(dto.getPhoneNumber());
-
         officerRepository.save(officer);
+        return new OfficerAddResponseDto(officer.getId(),officer.getName(),officer.getPassword(), officer.getEmail(), officer.getPhoneNumber());
     }
 
-
     @Override
-    public void update(int id,OfficerForAddDto officer) {
+    public void updateById(int id, OfficerUpdateRequestDto member) {
         Officer existingOfficer = officerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Officer not found with id: " + id));
+                .orElseThrow(() -> new RuntimeException("Member not found with id: " + id));
 
-        existingOfficer.setName(officer.getName());
-        existingOfficer.setPassword(officer.getPassword());
-        existingOfficer.setPhoneNumber(officer.getPhoneNumber());
-        existingOfficer.setEmail(officer.getEmail());
+        existingOfficer.setName(member.getName());
+        existingOfficer.setPassword(member.getPassword());
+        existingOfficer.setPhoneNumber(member.getPhoneNumber());
+        existingOfficer.setEmail(member.getEmail());
 
         officerRepository.save(existingOfficer);
     }
-
     @Override
-    public void delete(int id) {
-        Officer category = officerRepository.findById(id).orElse(null);
-        if(category==null)
-            throw new RuntimeException("Silinmek istenen kategori bulunamadı.");
+    public void deleteById(int id) {
+        Officer officer = officerRepository.findById(id).orElse(null);
+        if(officer==null)
+            throw new RuntimeException("Silinmek istenen officer bulunamadı.");
 
-        officerRepository.delete(category);
+        officerRepository.delete(officer);
     }
 
     @Override
-    public List<Officer> getAll() {
+    public List<Officer> getAllOfficers() {
         return officerRepository.findAll();
     }
 
     @Override
-    public Officer getById(int id) {
+    public Officer getOfficerById(int id) {
         return officerRepository.findById(id).orElseThrow();
     }
 

@@ -1,4 +1,4 @@
-package org.haiykut.libraryy.services.dtos.responses;
+package org.haiykut.libraryy.services.dtos.responses.Category;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
