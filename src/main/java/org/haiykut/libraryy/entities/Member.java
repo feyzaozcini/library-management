@@ -19,6 +19,7 @@ public class Member extends User {
     private List<Book> handledBooks;
 
     */
-    @OneToMany(mappedBy = "member")
-    private List<MemberBook> handledBooks;
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<RentableBook> handledBooks;
+
 }

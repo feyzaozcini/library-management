@@ -6,12 +6,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+import java.util.Objects;
+
 @Entity(name = "members_books")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MemberBook {
+public class RentableBook {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -21,4 +24,7 @@ public class MemberBook {
     @ManyToOne
     @JoinColumn(name = "book_id")
     private Book book;
+    private LocalDateTime rentDate;
+    private LocalDateTime deliveryDate;
+    private Boolean complated = false;
 }

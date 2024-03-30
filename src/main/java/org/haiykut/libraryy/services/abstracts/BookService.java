@@ -1,9 +1,8 @@
 package org.haiykut.libraryy.services.abstracts;
 
 import org.haiykut.libraryy.entities.Book;
-import org.haiykut.libraryy.services.dtos.BookAddDto;
-import org.haiykut.libraryy.services.dtos.BookUpdateDto;
-import org.springframework.http.ResponseEntity;
+import org.haiykut.libraryy.services.dtos.requests.book.BookAddDto;
+import org.haiykut.libraryy.services.dtos.requests.book.BookUpdateDto;
 
 import java.util.List;
 

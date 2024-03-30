@@ -1,13 +1,10 @@
 package org.haiykut.libraryy.controllers;
-
 import lombok.RequiredArgsConstructor;
 import org.haiykut.libraryy.entities.Book;
 import org.haiykut.libraryy.services.abstracts.BookService;
-import org.haiykut.libraryy.services.dtos.BookAddDto;
-import org.haiykut.libraryy.services.dtos.BookUpdateDto;
-import org.springframework.http.ResponseEntity;
+import org.haiykut.libraryy.services.dtos.requests.book.BookAddDto;
+import org.haiykut.libraryy.services.dtos.requests.book.BookUpdateDto;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController

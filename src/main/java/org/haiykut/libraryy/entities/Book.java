@@ -31,7 +31,7 @@ public class Book {
     private List<Publisher> publishers;
      */
     @OneToMany(mappedBy = "book")
-    private List<MemberBook> membersBooks;
+    private List<RentableBook> membersBooks;
     @OneToMany(mappedBy = "book")
     private List<PublisherBook> publishersBooks;
 }

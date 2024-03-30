@@ -1,4 +1,4 @@
-package org.haiykut.libraryy.services.dtos;
+package org.haiykut.libraryy.services.dtos.requests.book;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
