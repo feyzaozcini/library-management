@@ -16,7 +16,7 @@ import java.util.List;
 public class MemberController {
     private final MemberService memberService;
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Member> getAll(){
         return memberService.getAll();
     }
@@ -24,18 +24,18 @@ public class MemberController {
     public Member getOneMember(@PathVariable int memberId) {
         return memberService.getById(memberId);
     }
-    @PostMapping
+    @PostMapping("/add")
     public void add(@RequestBody MemberForAddDto dto)
     {
         memberService.add(dto);
     }
 
-    @DeleteMapping ("/{memberId}")
+    @DeleteMapping ("/delete/{memberId}")
     public void deleteOneMember(@PathVariable int officerId) {
         memberService.delete(officerId);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public void updateMember(@PathVariable int id, @RequestBody MemberForAddDto newMember)
     {
         try {

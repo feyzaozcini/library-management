@@ -16,7 +16,7 @@ import java.util.List;
 public class OfficerController {
     private final OfficerService officerService;
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Officer> getAll(){
         return officerService.getAll();
     }
@@ -24,7 +24,7 @@ public class OfficerController {
     public Officer getOneOfficer(@PathVariable int officerId) {
         return officerService.getById(officerId);
     }
-    @PostMapping
+    @PostMapping("/add")
     public void add(@RequestBody OfficerForAddDto dto)
     {
         officerService.add(dto);
@@ -35,7 +35,7 @@ public class OfficerController {
         officerService.delete(officerId);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public void updateOfficer(@PathVariable int id, @RequestBody OfficerForAddDto newOfficer)
     {
         try {
@@ -54,10 +54,6 @@ public class OfficerController {
     public String deliverBook(@PathVariable int officerId, @RequestBody RentRequestDto dto){
         return officerService.deliverBook(officerId, dto);
     }
-
-
-
-
 
 
 }
