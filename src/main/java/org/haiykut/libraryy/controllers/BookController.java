@@ -4,6 +4,7 @@ import org.haiykut.libraryy.entities.Book;
 import org.haiykut.libraryy.services.abstracts.BookService;
 import org.haiykut.libraryy.services.dtos.requests.book.BookAddRequestDto;
 import org.haiykut.libraryy.services.dtos.requests.book.BookUpdateDto;
+import org.haiykut.libraryy.services.dtos.responses.Book.BookAddResponseDto;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
 public class BookController {
     private final BookService bookService;
     @PostMapping("/add")
-    public BookAddRequestDto add(@RequestBody BookAddRequestDto dto){
+    public BookAddResponseDto add(@RequestBody BookAddRequestDto dto){
         return bookService.add(dto);
     }
     @GetMapping("/all")
