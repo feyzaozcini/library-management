@@ -4,8 +4,9 @@ import org.haiykut.libraryy.entities.Book;
 import org.haiykut.libraryy.repositories.BookRepository;
 import org.haiykut.libraryy.repositories.CategoryRepository;
 import org.haiykut.libraryy.services.abstracts.BookService;
-import org.haiykut.libraryy.services.dtos.requests.book.BookAddDto;
+import org.haiykut.libraryy.services.dtos.requests.book.BookAddRequestDto;
 import org.haiykut.libraryy.services.dtos.requests.book.BookUpdateDto;
+import org.haiykut.libraryy.services.dtos.responses.Book.BookAddResponseDto;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final CategoryRepository categoryRepository;
     @Override
-    public BookAddDto add(BookAddDto dto) {
+    public BookAddResponseDto add(BookAddRequestDto dto) {
         Book newBook = new Book();
         newBook.setName(dto.getName());
         newBook.setAuthor(dto.getAuthor());
@@ -23,7 +24,7 @@ public class BookServiceImpl implements BookService {
         newBook.setCategory(categoryRepository.findById(dto.getCategoryId()).orElseThrow(()-> new RuntimeException("Cant find a category of the related id!")));
         newBook.setBookCount(dto.getBookCount());
         bookRepository.save(newBook);
-        return new BookAddDto(newBook.getName(), newBook.getAuthor(), newBook.getCategory().getId(),newBook.getPage(), newBook.getBookCount());
+        return new BookAddResponseDto(newBook.getId(), newBook.getName(), newBook.getAuthor(), newBook.getCategory().getId(),newBook.getPage(), newBook.getBookCount());
     }
 
     @Override

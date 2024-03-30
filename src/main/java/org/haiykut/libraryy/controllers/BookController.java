@@ -2,7 +2,7 @@ package org.haiykut.libraryy.controllers;
 import lombok.RequiredArgsConstructor;
 import org.haiykut.libraryy.entities.Book;
 import org.haiykut.libraryy.services.abstracts.BookService;
-import org.haiykut.libraryy.services.dtos.requests.book.BookAddDto;
+import org.haiykut.libraryy.services.dtos.requests.book.BookAddRequestDto;
 import org.haiykut.libraryy.services.dtos.requests.book.BookUpdateDto;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
 public class BookController {
     private final BookService bookService;
     @PostMapping("/add")
-    public BookAddDto add(@RequestBody BookAddDto dto){
+    public BookAddRequestDto add(@RequestBody BookAddRequestDto dto){
         return bookService.add(dto);
     }
     @GetMapping("/all")

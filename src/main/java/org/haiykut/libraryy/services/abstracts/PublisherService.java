@@ -1,9 +1,6 @@
 package org.haiykut.libraryy.services.abstracts;
 
-import org.haiykut.libraryy.entities.Book;
 import org.haiykut.libraryy.entities.Publisher;
-import org.haiykut.libraryy.services.dtos.requests.book.BookAddDto;
-import org.haiykut.libraryy.services.dtos.requests.book.BookUpdateDto;
 import org.haiykut.libraryy.services.dtos.requests.publisher.PublisherAddRequestDto;
 
 import java.util.List;
