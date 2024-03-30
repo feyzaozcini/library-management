@@ -15,7 +15,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OfficerController {
     private final OfficerService officerService;
-    private final RentService rentService;
 
     @GetMapping
     public List<Officer> getAll(){
