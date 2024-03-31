@@ -8,6 +8,7 @@ import org.haiykut.libraryy.services.abstracts.OfficerService;
 import org.haiykut.libraryy.services.dtos.RentRequestDto;
 import org.haiykut.libraryy.services.dtos.requests.officer.OfficerAddRequestDto;
 import org.haiykut.libraryy.services.dtos.requests.officer.OfficerUpdateRequestDto;
+import org.haiykut.libraryy.services.dtos.responses.Book.BookGetResponseDto;
 import org.haiykut.libraryy.services.dtos.responses.Officer.OfficerAddResponseDto;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,7 @@ public class OfficerServiceImpl implements OfficerService  {
 
     private final OfficerRepository officerRepository;
     private final MemberRepository memberRepository;
+    private final BookRepository bookRepository;
     private final BookService bookService;
 
     @Override
@@ -81,7 +83,8 @@ public class OfficerServiceImpl implements OfficerService  {
     @Override
     public String rentBook(RentRequestDto dto) throws IOException {
         Member member = memberRepository.findById(dto.getMemberId()).orElseThrow();
-        Book book = bookService.getBookById(dto.getBookId());
+
+        Book book = bookRepository.findById(dto.getBookId()).orElseThrow();
         if (member.getHandledBooks().stream().anyMatch(rb -> rb.getBook().getId() == dto.getBookId() && !rb.getComplated())) {
             throw new IOException("Bu kitap daha önce alınmış!");
         }

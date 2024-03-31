@@ -1,12 +1,14 @@
 package org.haiykut.libraryy.services.concretes;
 import lombok.RequiredArgsConstructor;
 import org.haiykut.libraryy.entities.Book;
+import org.haiykut.libraryy.entities.Category;
 import org.haiykut.libraryy.repositories.BookRepository;
 import org.haiykut.libraryy.repositories.CategoryRepository;
 import org.haiykut.libraryy.services.abstracts.BookService;
 import org.haiykut.libraryy.services.dtos.requests.book.BookAddRequestDto;
 import org.haiykut.libraryy.services.dtos.requests.book.BookUpdateDto;
 import org.haiykut.libraryy.services.dtos.responses.Book.BookAddResponseDto;
+import org.haiykut.libraryy.services.dtos.responses.Book.BookGetResponseDto;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -52,7 +54,9 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book getBookById(int id) {
-        return bookRepository.findById(id).orElseThrow(()-> new RuntimeException("Cant find a book of the related id!"));
-    }
+    public BookGetResponseDto getBookById(int id) {
+        Book book=bookRepository.findById(id).orElseThrow(()-> new RuntimeException("Cant find a book of the related id!"));
+        Category category = categoryRepository.findById(book.getCategory().getId())
+                .orElseThrow(() -> new RuntimeException("Can't find the category of the book!"));
+        return new BookGetResponseDto(book.getName(), book.getAuthor(), category.getId(), book.getPage(), book.getBookCount());    }
 }

@@ -5,6 +5,7 @@ import org.haiykut.libraryy.services.abstracts.BookService;
 import org.haiykut.libraryy.services.dtos.requests.book.BookAddRequestDto;
 import org.haiykut.libraryy.services.dtos.requests.book.BookUpdateDto;
 import org.haiykut.libraryy.services.dtos.responses.Book.BookAddResponseDto;
+import org.haiykut.libraryy.services.dtos.responses.Book.BookGetResponseDto;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -22,7 +23,8 @@ public class BookController {
         return bookService.getAllBooks();
     }
     @GetMapping("/{id}")
-    public Book getBookById(@PathVariable int id){
+    public BookGetResponseDto getBookById(@PathVariable int id){
+
         return bookService.getBookById(id);
     }
     @DeleteMapping("/delete/{id}")
