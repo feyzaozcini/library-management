@@ -23,21 +23,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
-    private final CategoryRepository categoryRepository;
     @Override
     public AddBookResponse add(AddBookRequest request) {
-       /* Book newBook = new Book();
-        newBook.setName(dto.getName());
-        newBook.setAuthor(dto.getAuthor());
-        newBook.setPage(dto.getPage());
-        newBook.setCategory(categoryRepository.findById(dto.getCategoryId()).orElseThrow(()-> new RuntimeException("Cant find a category of the related id!")));
-        newBook.setBookCount(dto.getBookCount());
-        bookRepository.save(newBook);*/
-
-        Book savedBook=bookRepository.save(BookMapper.INSTANCE.bookFromRequest(request));
-        //category id ile ilgili bir hata
-        //category id bulunamasaydı?
-        //program çalışıyor ama ekleme yapmıyor
+        Book savedBook = BookMapper.INSTANCE.bookFromRequest(request);
+        bookRepository.save(savedBook);
         AddBookResponse response= new AddBookResponse(savedBook.getId(),savedBook.getName(),savedBook.getAuthor(),savedBook.getCategory().getId(),savedBook.getBookCount(),savedBook.getBookCount());
         return response;
     }
@@ -50,18 +39,11 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public UpdateBookResponse updateById(int id, UpdateBookRequest request) {
-        /*Book requestedBook = bookRepository.findById(id).orElseThrow(()-> new RuntimeException("Cant find a book of the related id!"));
-        requestedBook.setName(dto.getName());
-        requestedBook.setBookCount(dto.getBookCount());
-        requestedBook.setPage(dto.getPage());
-        requestedBook.setAuthor(dto.getAuthor());
-        requestedBook.setCategory(categoryRepository.findById(dto.getCategoryId()).orElseThrow());
-        bookRepository.save(requestedBook);*/
-        Book book=BookMapper.INSTANCE.bookFromRequest(request);
-        Book updatedBook=bookRepository.save(book);
-        UpdateBookResponse response=new UpdateBookResponse(updatedBook.getName(),updatedBook.getAuthor(),updatedBook.getCategory().getId(),updatedBook.getPage(),updatedBook.getBookCount());
+        Book book = BookMapper.INSTANCE.bookFromRequest(request);
+        book.setId(id);
+        bookRepository.save(book);
+        UpdateBookResponse response=new UpdateBookResponse(book.getName(),book.getAuthor(),book.getCategory().getId(),book.getPage(),book.getBookCount());
         return response;
-
     }
 
     @Override
@@ -77,10 +59,8 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public GetBookResponse getBookById(int id) {
-        /*Book book=bookRepository.findById(id).orElseThrow(()-> new RuntimeException("Cant find a book of the related id!"));
-        Category category = categoryRepository.findById(book.getCategory().getId())
-                .orElseThrow(() -> new RuntimeException("Can't find the category of the book!"));*/
-        Book book=bookRepository.findById(id).orElseThrow(()-> new RuntimeException("Cant find a book of the related id!"));
-        GetBookResponse response=BookMapper.INSTANCE.bookFromResponse(book);
-        return response;    }
+        Book book = bookRepository.findById(id).orElseThrow(() -> new RuntimeException("Cant find a book of the related id!"));
+        GetBookResponse response = BookMapper.INSTANCE.bookFromResponse(book);
+        return response;
+    }
 }

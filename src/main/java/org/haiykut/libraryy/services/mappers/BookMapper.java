@@ -5,6 +5,7 @@ import org.haiykut.libraryy.services.dtos.requests.book.AddBookRequest;
 import org.haiykut.libraryy.services.dtos.requests.book.GetBookRequest;
 import org.haiykut.libraryy.services.dtos.requests.book.UpdateBookRequest;
 import org.haiykut.libraryy.services.dtos.responses.Book.GetBookResponse;
+import org.haiykut.libraryy.services.dtos.responses.Book.UpdateBookResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -20,6 +21,8 @@ public interface BookMapper {
     Book bookFromRequest(UpdateBookRequest request);
 
 
+    @Mapping(source = "category.id", target = "categoryId")
     GetBookResponse bookFromResponse(Book book);
 
+    
 }

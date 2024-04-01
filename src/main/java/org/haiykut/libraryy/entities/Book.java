@@ -30,7 +30,7 @@ public class Book {
     @ManyToMany(mappedBy = "books")
     private List<Publisher> publishers;
      */
-    @OneToMany(mappedBy = "book")
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     private List<RentableBook> membersBooks;
     @OneToMany(mappedBy = "book")
     private List<PublisherBook> publishersBooks;

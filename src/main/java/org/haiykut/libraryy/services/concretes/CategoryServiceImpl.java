@@ -6,6 +6,7 @@ import org.haiykut.libraryy.services.abstracts.CategoryService;
 import org.haiykut.libraryy.services.dtos.requests.category.CategoryAddRequestDto;
 import org.haiykut.libraryy.services.dtos.requests.category.CategoryUpdateRequestDto;
 import org.haiykut.libraryy.services.dtos.responses.Category.CategoryAddResponseDto;
+import org.haiykut.libraryy.services.mappers.CategoryMapper;
 import org.springframework.stereotype.Service;
 import java.util.List;
 @Service
@@ -14,24 +15,20 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
     @Override
     public CategoryAddResponseDto add(CategoryAddRequestDto dto) {
-        Category newCategory = new Category();
-        newCategory.setName(dto.getName());
+        Category newCategory = CategoryMapper.INSTANCE.categoryFromRequest(dto);
         categoryRepository.save(newCategory);
         return new CategoryAddResponseDto(newCategory.getId(), newCategory.getName());
-
     }
-
     @Override
     public String deleteById(int id) {
         categoryRepository.deleteById(id);
         return "Silindi!";
     }
-
     @Override
     public String updateById(int id, CategoryUpdateRequestDto dto) {
-        Category requestedCategory = categoryRepository.findById(id).orElseThrow();
-        requestedCategory.setName(dto.getName());
-        categoryRepository.save(requestedCategory);
+        Category updatedCategory = CategoryMapper.INSTANCE.categoryFromRequest(dto);
+        updatedCategory.setId(id);
+        categoryRepository.save(updatedCategory);
         return "Guncellendi";
     }
 
