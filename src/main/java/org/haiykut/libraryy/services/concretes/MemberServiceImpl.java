@@ -1,6 +1,4 @@
 package org.haiykut.libraryy.services.concretes;
-
-
 import lombok.RequiredArgsConstructor;
 import org.haiykut.libraryy.entities.Member;
 import org.haiykut.libraryy.repositories.MemberRepository;
@@ -8,10 +6,12 @@ import org.haiykut.libraryy.services.abstracts.MemberService;
 import org.haiykut.libraryy.services.dtos.requests.member.MemberAddRequestDto;
 import org.haiykut.libraryy.services.dtos.requests.member.MemberUpdateRequestDto;
 import org.haiykut.libraryy.services.dtos.responses.Member.MemberAddResponseDto;
+import org.haiykut.libraryy.services.dtos.responses.Member.MemberGetDto;
+import org.haiykut.libraryy.services.dtos.responses.Member.MemberUpdateResponseDto;
+import org.haiykut.libraryy.services.mappers.MemberMapper;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-
+import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
@@ -19,26 +19,17 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
     @Override
     public MemberAddResponseDto add(MemberAddRequestDto dto) {
-        Member member=new Member();
-        member.setName(dto.getName());
-        member.setPassword(dto.getPassword());
-        member.setEmail(dto.getEmail());
-        member.setPhoneNumber(dto.getPhoneNumber());
+        Member member = MemberMapper.INSTANCE.memberFromDto(dto);
         memberRepository.save(member);
-        return new MemberAddResponseDto(member.getId(),member.getName(),member.getPassword(), member.getEmail(), member.getPhoneNumber());
+        return MemberMapper.INSTANCE.addDtoFromMember(member);
     }
 
     @Override
-    public void updateById(int id, MemberUpdateRequestDto member) {
-        Member existingMember = memberRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Member not found with id: " + id));
-
-        existingMember.setName(member.getName());
-        existingMember.setPassword(member.getPassword());
-        existingMember.setPhoneNumber(member.getPhoneNumber());
-        existingMember.setEmail(member.getEmail());
-
-        memberRepository.save(existingMember);
+    public MemberUpdateResponseDto updateById(int id, MemberUpdateRequestDto member) {
+        Member requestedMember = MemberMapper.INSTANCE.memberFromDto(member);
+        requestedMember.setId(id);
+        memberRepository.save(requestedMember);
+        return MemberMapper.INSTANCE.updateDtoFromMember(requestedMember);
     }
 
     @Override
@@ -46,17 +37,16 @@ public class MemberServiceImpl implements MemberService {
         Member member = memberRepository.findById(id).orElse(null);
         if(member==null)
             throw new RuntimeException("Silinmek istenen member bulunamadı.");
-
         memberRepository.delete(member);
     }
 
     @Override
-    public List<Member> getAllMembers() {
-        return memberRepository.findAll();
+    public List<MemberGetDto> getAllMembers() {
+        return  memberRepository.findAll().stream().map(member -> MemberMapper.INSTANCE.memberGetDtoFromMember(member)).collect(Collectors.toList());
     }
 
     @Override
-    public Member getMemberById(int id) {
-        return memberRepository.findById(id).orElseThrow();
+    public MemberGetDto getMemberById(int id) {
+        return MemberMapper.INSTANCE.memberGetDtoFromMember(memberRepository.findById(id).orElseThrow());
     }
 }

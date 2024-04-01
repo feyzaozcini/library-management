@@ -6,6 +6,8 @@ import org.haiykut.libraryy.services.abstracts.MemberService;
 import org.haiykut.libraryy.services.dtos.requests.member.MemberAddRequestDto;
 import org.haiykut.libraryy.services.dtos.requests.member.MemberUpdateRequestDto;
 import org.haiykut.libraryy.services.dtos.responses.Member.MemberAddResponseDto;
+import org.haiykut.libraryy.services.dtos.responses.Member.MemberGetDto;
+import org.haiykut.libraryy.services.dtos.responses.Member.MemberUpdateResponseDto;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,11 +19,11 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/all")
-    public List<Member> getAll(){
+    public List<MemberGetDto> getAll(){
         return memberService.getAllMembers();
     }
     @GetMapping("/{memberId}")
-    public Member getOneMember(@PathVariable int memberId) {
+    public MemberGetDto getOneMember(@PathVariable int memberId) {
         return memberService.getMemberById(memberId);
     }
     @PostMapping("/add")
@@ -35,10 +37,10 @@ public class MemberController {
     }
 
     @PutMapping("/update/{id}")
-    public void updateMember(@PathVariable int id, @RequestBody MemberUpdateRequestDto newMember)
+    public MemberUpdateResponseDto updateMember(@PathVariable int id, @RequestBody MemberUpdateRequestDto newMember)
     {
         try {
-            memberService.updateById(id,newMember);
+            return memberService.updateById(id, newMember);
         } catch (Exception e) {
             throw new RuntimeException("Error updating member: " + e.getMessage());
         }

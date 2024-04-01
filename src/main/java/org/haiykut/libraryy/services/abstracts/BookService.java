@@ -12,7 +12,7 @@ import java.util.List;
 public interface BookService {
     AddBookResponse add(AddBookRequest dto);
 
-    String deleteById(int id);
+    void deleteById(int id);
     UpdateBookResponse updateById(int id, UpdateBookRequest dto);
 
     List<GetBookResponse> getAllBooks();

@@ -37,12 +37,11 @@ public class BookController {
     }
     @GetMapping("/{id}")
     public GetBookResponse getBookById(@PathVariable int id){
-
         return bookService.getBookById(id);
     }
     @DeleteMapping("/delete/{id}")
-    public String deleteById(@PathVariable int id){
-        return bookService.deleteById(id);
+    public void deleteById(@PathVariable int id){
+        bookService.deleteById(id);
     }
     @PutMapping("/update/{id}")
     public UpdateBookResponse updateById(@PathVariable int id, @RequestBody UpdateBookRequest dto){

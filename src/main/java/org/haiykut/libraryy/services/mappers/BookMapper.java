@@ -22,7 +22,7 @@ public interface BookMapper {
 
 
     @Mapping(source = "category.id", target = "categoryId")
-    GetBookResponse bookFromResponse(Book book);
+    GetBookResponse responseFromBook(Book book);
 
     
 }
