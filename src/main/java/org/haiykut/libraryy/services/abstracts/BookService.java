@@ -1,20 +1,21 @@
 package org.haiykut.libraryy.services.abstracts;
 
 import org.haiykut.libraryy.entities.Book;
-import org.haiykut.libraryy.services.dtos.requests.book.BookAddRequestDto;
-import org.haiykut.libraryy.services.dtos.requests.book.BookUpdateDto;
-import org.haiykut.libraryy.services.dtos.responses.Book.BookAddResponseDto;
-import org.haiykut.libraryy.services.dtos.responses.Book.BookGetResponseDto;
+import org.haiykut.libraryy.services.dtos.requests.book.AddBookRequest;
+import org.haiykut.libraryy.services.dtos.requests.book.UpdateBookRequest;
+import org.haiykut.libraryy.services.dtos.responses.Book.AddBookResponse;
+import org.haiykut.libraryy.services.dtos.responses.Book.GetBookResponse;
+import org.haiykut.libraryy.services.dtos.responses.Book.UpdateBookResponse;
 
 import java.util.List;
 
 public interface BookService {
-    BookAddResponseDto add(BookAddRequestDto dto);
+    AddBookResponse add(AddBookRequest dto);
 
     String deleteById(int id);
-    BookUpdateDto updateById(int id, BookUpdateDto dto);
+    UpdateBookResponse updateById(int id, UpdateBookRequest dto);
 
-    List<Book> getAllBooks();
-    BookGetResponseDto getBookById(int id);
+    List<GetBookResponse> getAllBooks();
+    GetBookResponse getBookById(int id);
 
 }

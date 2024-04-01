@@ -8,7 +8,7 @@ import org.haiykut.libraryy.services.abstracts.OfficerService;
 import org.haiykut.libraryy.services.dtos.RentRequestDto;
 import org.haiykut.libraryy.services.dtos.requests.officer.OfficerAddRequestDto;
 import org.haiykut.libraryy.services.dtos.requests.officer.OfficerUpdateRequestDto;
-import org.haiykut.libraryy.services.dtos.responses.Book.BookGetResponseDto;
+import org.haiykut.libraryy.services.dtos.responses.Book.GetBookResponse;
 import org.haiykut.libraryy.services.dtos.responses.Officer.OfficerAddResponseDto;
 import org.springframework.stereotype.Service;
 

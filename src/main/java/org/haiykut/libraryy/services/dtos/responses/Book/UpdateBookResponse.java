@@ -1,15 +1,15 @@
-package org.haiykut.libraryy.services.dtos.requests.book;
+package org.haiykut.libraryy.services.dtos.responses.Book;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
-public class BookUpdateDto {
+@AllArgsConstructor
+@NoArgsConstructor
+public class UpdateBookResponse {
     private String name;
     private String author;
     private int categoryId;

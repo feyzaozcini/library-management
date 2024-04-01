@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookAddResponseDto {
+public class AddBookResponse {
     private int id;
     private String name;
     private String author;

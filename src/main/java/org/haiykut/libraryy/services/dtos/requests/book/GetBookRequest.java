@@ -9,6 +9,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class BookGetRequestDto {
+public class GetBookRequest {
     private int id;
 }
