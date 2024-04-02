@@ -1,4 +1,5 @@
-package org.haiykut.libraryy.services.dtos.requests.category;
+package org.haiykut.libraryy.services.dtos.responses.Category;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +10,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoryAddRequestDto {
+
+public class CategoryGetDto {
     private String name;
     private String description;
-
 }

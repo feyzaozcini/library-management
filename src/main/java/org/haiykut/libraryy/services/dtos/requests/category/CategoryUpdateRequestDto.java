@@ -10,5 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CategoryUpdateRequestDto {
-    String name;
+    private String name;
+    private String description;
 }

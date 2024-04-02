@@ -9,7 +9,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoryListDto {
+public class CategoryUpdateResponseDto {
     private int id;
     private String name;
+
+    private String description;
 }

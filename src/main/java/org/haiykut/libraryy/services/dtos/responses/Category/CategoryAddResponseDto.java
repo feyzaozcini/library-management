@@ -1,15 +1,17 @@
 package org.haiykut.libraryy.services.dtos.responses.Category;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class CategoryAddResponseDto {
-    private int id;
+
     private String name;
+
+    private String description;
+
+
 }
