@@ -27,6 +27,11 @@ public class CategoryController {
         return categoryService.getCategoryById(id);
     }
 
+    @PostMapping("/add")
+    public CategoryAddResponseDto add(@RequestBody CategoryAddRequestDto dto){
+        return categoryService.add(dto);
+    }
+
 
     @DeleteMapping("/delete/{id}")
     public void deleteById(@PathVariable int id) {

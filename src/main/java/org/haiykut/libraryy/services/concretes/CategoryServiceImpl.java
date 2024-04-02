@@ -71,8 +71,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     private void categoryWithSameIdShouldNotExist(int id){
-        if(categoryRepository.findById(id).isPresent()){
-            throw new BusinessException("A category with this id already exists!");
+        if(categoryRepository.findById(id).isEmpty()){
+            throw new BusinessException("Category not found!");
         }
     }
 
