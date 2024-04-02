@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.haiykut.libraryy.entities.Publisher;
 import org.haiykut.libraryy.services.abstracts.PublisherService;
 import org.haiykut.libraryy.services.dtos.requests.publisher.PublisherAddRequestDto;
+import org.haiykut.libraryy.services.dtos.requests.publisher.PublisherUpdateRequestDto;
+import org.haiykut.libraryy.services.dtos.responses.Publisher.PublisherAddResponseDto;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,11 +28,11 @@ public class PublisherController {
         return publisherService.deleteById(id);
     }
     @PostMapping("/add")
-    public String add(PublisherAddRequestDto dto){
+    public PublisherAddResponseDto add(PublisherAddRequestDto dto){
         return publisherService.add(dto);
     }
     @PutMapping("/update/{id}")
-    public String updateById(@PathVariable int id, @RequestBody PublisherAddRequestDto dto){
-        return publisherService.updateById(id,dto);
+    public String updateById(@PathVariable int id, @RequestBody PublisherUpdateRequestDto dto){
+        return publisherService.updateById(id, dto);
     }
 }
