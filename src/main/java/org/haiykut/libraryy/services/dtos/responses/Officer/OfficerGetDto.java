@@ -9,10 +9,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class OfficerListDto {
-    private int id;
-    private String name;
-    private String password;
-    private String phoneNumber;
-    private String email;
+public class OfficerGetDto {
+        private String name;
+        private String password;
+        private String phoneNumber;
+        private String email;
 }

@@ -3,19 +3,21 @@ package org.haiykut.libraryy.services.concretes;
 import lombok.RequiredArgsConstructor;
 import org.haiykut.libraryy.entities.*;
 import org.haiykut.libraryy.repositories.*;
-import org.haiykut.libraryy.services.abstracts.BookService;
 import org.haiykut.libraryy.services.abstracts.OfficerService;
 import org.haiykut.libraryy.services.dtos.RentRequestDto;
 import org.haiykut.libraryy.services.dtos.requests.officer.OfficerAddRequestDto;
 import org.haiykut.libraryy.services.dtos.requests.officer.OfficerUpdateRequestDto;
-import org.haiykut.libraryy.services.dtos.responses.Book.GetBookResponse;
 import org.haiykut.libraryy.services.dtos.responses.Officer.OfficerAddResponseDto;
+import org.haiykut.libraryy.services.dtos.responses.Officer.OfficerGetDto;
+import org.haiykut.libraryy.services.dtos.responses.Officer.OfficerUpdateResponseDto;
+import org.haiykut.libraryy.services.mappers.OfficerMapper;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -25,30 +27,23 @@ public class OfficerServiceImpl implements OfficerService  {
     private final OfficerRepository officerRepository;
     private final MemberRepository memberRepository;
     private final BookRepository bookRepository;
-    private final BookService bookService;
+
 
     @Override
     public OfficerAddResponseDto add(OfficerAddRequestDto dto) {
-        Officer officer=new Officer();
-        officer.setName(dto.getName());
-        officer.setPassword(dto.getPassword());
-        officer.setEmail(dto.getEmail());
-        officer.setPhoneNumber(dto.getPhoneNumber());
+        Officer officer= OfficerMapper.INSTANCE.officerFromDto(dto);
         officerRepository.save(officer);
-        return new OfficerAddResponseDto(officer.getId(),officer.getName(),officer.getPassword(), officer.getEmail(), officer.getPhoneNumber());
+        return OfficerMapper.INSTANCE.addDtoFromOfficer(officer);
     }
 
     @Override
-    public void updateById(int id, OfficerUpdateRequestDto member) {
-        Officer existingOfficer = officerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Member not found with id: " + id));
+    public OfficerUpdateResponseDto updateById(int id,OfficerUpdateRequestDto officer){
+        Officer requestedOfficer=OfficerMapper.INSTANCE.officerFromDto(officer);
+        requestedOfficer.setId(id);
 
-        existingOfficer.setName(member.getName());
-        existingOfficer.setPassword(member.getPassword());
-        existingOfficer.setPhoneNumber(member.getPhoneNumber());
-        existingOfficer.setEmail(member.getEmail());
+        officerRepository.save(requestedOfficer);
 
-        officerRepository.save(existingOfficer);
+        return OfficerMapper.INSTANCE.updateDtoFromOfficer(requestedOfficer);
     }
     @Override
     public void deleteById(int id) {
@@ -60,13 +55,13 @@ public class OfficerServiceImpl implements OfficerService  {
     }
 
     @Override
-    public List<Officer> getAllOfficers() {
-        return officerRepository.findAll();
+    public List<OfficerGetDto> getAllOfficers() {
+        return  officerRepository.findAll().stream().map(officer -> OfficerMapper.INSTANCE.officerGetDtoFromOfficer(officer)).collect(Collectors.toList());
     }
 
     @Override
-    public Officer getOfficerById(int id) {
-        return officerRepository.findById(id).orElseThrow();
+    public OfficerGetDto getOfficerById(int id) {
+        return OfficerMapper.INSTANCE.officerGetDtoFromOfficer(officerRepository.findById(id).orElseThrow());
     }
 
 
