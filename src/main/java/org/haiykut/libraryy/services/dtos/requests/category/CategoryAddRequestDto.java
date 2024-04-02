@@ -10,6 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CategoryAddRequestDto {
-    String name;
+    private String name;
+    private String description;
 
 }
