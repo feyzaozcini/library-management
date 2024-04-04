@@ -1,6 +1,7 @@
 package org.haiykut.libraryy.services.concretes;
 
 import lombok.RequiredArgsConstructor;
+import org.haiykut.libraryy.core.utils.exceptions.types.BusinessException;
 import org.haiykut.libraryy.entities.*;
 import org.haiykut.libraryy.repositories.*;
 import org.haiykut.libraryy.services.abstracts.OfficerService;
@@ -31,6 +32,8 @@ public class OfficerServiceImpl implements OfficerService  {
 
     @Override
     public OfficerAddResponseDto add(OfficerAddRequestDto dto) {
+        officerWithSameNameShouldNotExist(dto.getName());
+
         Officer officer= OfficerMapper.INSTANCE.officerFromDto(dto);
         officerRepository.save(officer);
         return OfficerMapper.INSTANCE.addDtoFromOfficer(officer);
@@ -38,20 +41,19 @@ public class OfficerServiceImpl implements OfficerService  {
 
     @Override
     public OfficerUpdateResponseDto updateById(int id,OfficerUpdateRequestDto officer){
-        Officer requestedOfficer=OfficerMapper.INSTANCE.officerFromDto(officer);
-        requestedOfficer.setId(id);
+        officerWithSameNameShouldNotExist(officer.getName());
 
+        Officer requestedOfficer= officerRepository.findById(id).orElseThrow(() -> new RuntimeException("Officer not found!"));
+        requestedOfficer.setId(id);
         officerRepository.save(requestedOfficer);
 
         return OfficerMapper.INSTANCE.updateDtoFromOfficer(requestedOfficer);
     }
     @Override
     public void deleteById(int id) {
-        Officer officer = officerRepository.findById(id).orElse(null);
-        if(officer==null)
-            throw new RuntimeException("Silinmek istenen officer bulunamadı.");
+        officerWithSameIdShouldNotExist(id);
 
-        officerRepository.delete(officer);
+        officerRepository.deleteById(id);
     }
 
     @Override
@@ -61,6 +63,7 @@ public class OfficerServiceImpl implements OfficerService  {
 
     @Override
     public OfficerGetDto getOfficerById(int id) {
+        officerWithSameIdShouldNotExist(id);
         return OfficerMapper.INSTANCE.officerGetDtoFromOfficer(officerRepository.findById(id).orElseThrow());
     }
 
@@ -109,5 +112,16 @@ public class OfficerServiceImpl implements OfficerService  {
         return "Kitap basariyla geri alindi!";
     }
 
+    private void officerWithSameNameShouldNotExist(String name){
+        if(officerRepository.findByNameIgnoreCase(name).isPresent()){
+            throw new BusinessException("A officer with this name already exists!");
+        }
+    }
+
+    private void officerWithSameIdShouldNotExist(int id){
+        if(officerRepository.findById(id).isEmpty()){
+            throw new BusinessException("Officer not found!");
+        }
+    }
 
 }
